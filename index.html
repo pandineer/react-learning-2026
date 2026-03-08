@@ -20,6 +20,7 @@
               <h1>Hello, world!</h1>
               <MyButton />
               <AboutPage />
+              <UseData />
             </div>
           );
       }
@@ -39,6 +40,22 @@
             <h1>About</h1>
             <p>Hello there.<br />How do you do?</p>
           </>
+        );
+      }
+
+      // データの表示
+      function UseData() {
+        const user = {
+          name: 'panda',
+          backgroundColor: 'black',
+          color: 'white',
+        };
+
+        return (
+          <p style={{
+            backgroundColor: user.backgroundColor,
+            color: user.color,
+          }}>{user.name + '-san'}</p>
         );
       }
 
