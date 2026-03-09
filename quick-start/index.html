@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+      function MyApp() {
+          return (
+            <div>
+              <h1>Hello, world!</h1>
+              <MyButton />
+              <AboutPage />
+              <UseData />
+              <ConditionalRender />
+              <ListRender />
+              <HandlerButton />
+              <ButtonWithState />
+              <ButtonWithState />
+              <ParentComponent />
+              <ParentComponent />
+            </div>
+          );
+      }
+
+      // コンポーネントの作成とネスト
+      // スタイルの追加
+      function MyButton() {
+        return (
+          <button className="button-class">I'm a button</button>
+        );
+      }
+
+      // JSXでマークアップを書く
+      function AboutPage() {
+        return (
+          <>
+            <h1>About</h1>
+            <p>Hello there.<br />How do you do?</p>
+          </>
+        );
+      }
+
+      // データの表示
+      function UseData() {
+        const user = {
+          name: 'panda',
+          backgroundColor: 'black',
+          color: 'white',
+        };
+
+        return (
+          <p style={{
+            backgroundColor: user.backgroundColor,
+            color: user.color,
+          }}>{user.name + '-san'}</p>
+        );
+      }
+
+      // 条件付きレンダー
+      function ConditionalRender() {
+        let content = 'this is content';
+        let message;
+        if (content == null) {
+          message = "No content";
+        } else {
+          message = content;
+        }
+        return (
+          <div>
+            <p>{message}</p>
+          </div>
+        );
+      }
+
+      // リストのレンダー
+      function ListRender() {
+        const products = [
+          { title: 'Cabbage', isFruit: false, id: 1},
+          { title: 'Garlic', isFruit: false, id: 2},
+          { title: 'Apple', isFruit: true, id: 3},
+        ];
+
+        const listItems = products.map(product =>
+          <li
+            key={products.id}
+            style={{
+              color: product.isFruit ? 'magenta' : 'darkgreen',
+            }}
+          >
+            {product.title}
+          </li>
+        );
+
+        return (
+          <ul>{listItems}</ul>
+        )
+      }
+
+      // イベントに応答する
+      function HandlerButton() {
+        function handleClick() {
+          alert('You clicked me!');
+        }
+
+        return (
+          <button onClick={handleClick}>Click me</button>
+        );
+      }
+
+      // 画面の更新
+      // import { userState } from 'react'; - ここではimportする代わりにReact.useStateとして使うのでコメントアウトしてある
+      function ButtonWithState() {
+        const [count, setCount] = React.useState(0);
+
+        function handleClick() {
+          setCount(count + 1);
+        }
+
+        return (
+          <button onClick={handleClick}>
+            Clicked {count} times
+          </button>
+        );
+      }
+
+      // コンポーネント間でデータを共有する
+      function ParentComponent() {
+        const [count, setCount] = React.useState(0);
+
+        function handleClick() {
+          setCount(count + 1);
+        }
+
+        return (
+          <div>
+            <h1>Counters that update together</h1>
+            <ChildButton count={count} onClick={handleClick} />
+            <ChildButton count={count} onClick={handleClick} />
+          </div>
+        );
+      }
+
+      function ChildButton({ count, onClick }) {
+        return (
+          <button onClick={onClick}>
+            Clicked {count} times
+          </button>
+        );
+      }
+
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<MyApp />);
+
+    </script>
+    <!--
+	Note: this page is a great way to try React but it's not suitable for production.
+	It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+	Read this page for starting a new React project with JSX:
+	https://react.dev/learn/start-a-new-react-project
+
+	Read this page for adding React with JSX to an existing project:
+	https://react.dev/learn/add-react-to-an-existing-project
+      -->
+  </body>
+</html>
